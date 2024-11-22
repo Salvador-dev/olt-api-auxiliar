@@ -19,13 +19,15 @@ class SmartOltController extends Controller
             $data = json_decode(json_decode($response)[0]);
         
             return response()->json([
-                'data' => $data->response
+                'data' => $data->response,
+                'status' => true
             ]);   
 
         } catch (\Throwable $th) {
 
             return response()->json([
-                'data' => 'No se pudo conectar con Smart Olt...'
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
             ]);           
         }
     }
@@ -44,13 +46,17 @@ class SmartOltController extends Controller
             \Illuminate\Support\Facades\Log::debug($data->response);
         
             return response()->json([
-                'data' => $data->response
+                'data' => $data->response,
+                'status' => true
             ]);   
 
         } catch (\Throwable $th) {
 
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
             return response()->json([
-                'data' => 'No se pudo conectar con Smart Olt...'
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
             ]);           
         }
 
