@@ -32,6 +32,44 @@ class SmartOltController extends Controller
         }
     }
 
+    public function getOnuTypes()
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt2/get_onu_types_by_pon_type/gpon');
+            
+            $data = json_decode(json_decode($response)[0]);
+
+            $array1 = $data->response;
+
+            $response = Http::get($url . '/olt2/get_onu_types_by_pon_type/epon');
+            
+            $data = json_decode(json_decode($response)[0]);
+
+            $array2 = $data->response;
+
+            $array = array_merge($array1, $array2);
+        
+            return response()->json([
+                'data' => $array,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
     public function getSpeedProfiles()
     {
 
@@ -49,6 +87,146 @@ class SmartOltController extends Controller
                 'data' => $data->response,
                 'status' => true
             ]);   
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
+    public function getUnconfiguredOnusByOlt($id)
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt2/unconfigured_onus_for_olt/' . $id);
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            \Illuminate\Support\Facades\Log::debug($data->response);
+        
+            return response()->json([
+                'data' => $data->response,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
+    public function getOnuDetails($id)
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt2/get_onu_details/' . $id);
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            \Illuminate\Support\Facades\Log::debug($response);
+        
+            return response()->json([
+                'data' => $data->onu_details,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            \Illuminate\Support\Facades\Log::debug($th);
+
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
+    public function getZones()
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt/get_zones');
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            \Illuminate\Support\Facades\Log::debug($data->response);
+        
+            return response()->json([
+                'data' => $data->response,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
+    public function getOdbs()
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt/get_zones');
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            $zones = $data->response;
+
+            $odbs = [];
+
+            foreach ($zones as $data) {
+
+                $url = env('SMART_OLT_API');
+     
+                $response = Http::get($url . '/olt2/get_odbs/' . $data->id);
+            
+                $data = json_decode(json_decode($response)[0]);
+
+                foreach ($data->response as $odb) {
+                    array_push($odbs, $odb);
+                }
+            }
+
+            \Illuminate\Support\Facades\Log::debug($data->response);
+        
+            return response()->json([
+                'data' => $odbs,
+                'status' => true
+            ]);  
 
         } catch (\Throwable $th) {
 

@@ -17,6 +17,16 @@ Route::middleware(ApiKeyMiddleware::class)->group(function(){
 
     Route::get('/speed_profiles/listing', [SmartOltController::class, 'getSpeedProfiles']);
 
+    Route::get('/onu_types/listing', [SmartOltController::class, 'getOnuTypes']);
+
+    Route::get('/onus/onu_details/{id}', [SmartOltController::class, 'getOnuDetails']);
+
+    Route::get('/zones/listing', [SmartOltController::class, 'getZones']);
+
+    Route::get('/odbs/listing', [SmartOltController::class, 'getOdbs']);
+
+    Route::get('/olts/unconfigured_onus/{id}', [SmartOltController::class, 'getUnconfiguredOnusByOlt']);
+
 
 });
 
