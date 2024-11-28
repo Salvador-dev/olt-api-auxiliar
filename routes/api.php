@@ -21,12 +21,13 @@ Route::middleware(ApiKeyMiddleware::class)->group(function(){
 
     Route::get('/onus/onu_details/{id}', [SmartOltController::class, 'getOnuDetails']);
 
+    Route::get('/onus/unconfigured_onus', [SmartOltController::class, 'getUnconfiguredOnus']);
+
+    Route::get('/onus/unconfigured_onus_for_olt/{id}', [SmartOltController::class, 'getUnconfiguredOnusByOlt']);
+
     Route::get('/zones/listing', [SmartOltController::class, 'getZones']);
 
     Route::get('/odbs/listing', [SmartOltController::class, 'getOdbs']);
-
-    Route::get('/olts/unconfigured_onus/{id}', [SmartOltController::class, 'getUnconfiguredOnusByOlt']);
-
 
 });
 

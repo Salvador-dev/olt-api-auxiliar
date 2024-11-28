@@ -130,6 +130,39 @@ class SmartOltController extends Controller
 
     }
 
+    public function getUnconfiguredOnus()
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt/unconfigured_onus/');
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            \Illuminate\Support\Facades\Log::debug($response);
+        
+            return response()->json([
+                'data' => $data->onu_details,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            \Illuminate\Support\Facades\Log::debug($th);
+
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
     public function getOnuDetails($id)
     {
 
