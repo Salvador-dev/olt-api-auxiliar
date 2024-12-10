@@ -32,6 +32,31 @@ class SmartOltController extends Controller
         }
     }
 
+    public function getTemperatureAndUptime()
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt/get_olts_uptime_and_env_temperature');
+        
+            $data = json_decode(json_decode($response)[0]);
+        
+            return response()->json([
+                'data' => $data->response,
+                'status' => true
+            ]);   
+
+        } catch (\Throwable $th) {
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+    }
+
     public function getOnuTypes()
     {
 
