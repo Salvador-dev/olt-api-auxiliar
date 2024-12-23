@@ -31,6 +31,10 @@ Route::middleware(ApiKeyMiddleware::class)->group(function(){
 
     Route::get('/odbs/listing', [SmartOltController::class, 'getOdbs']);
 
+    Route::get('/olts/cards_by_olt/{id}', [SmartOltController::class, 'getOltCardsById']);
+
+    Route::get('/olts/pon_ports_details/{id}', [SmartOltController::class, 'getOltPonPorts']);
+
 });
 
 

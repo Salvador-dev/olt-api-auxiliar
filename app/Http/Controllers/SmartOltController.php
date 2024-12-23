@@ -297,4 +297,98 @@ class SmartOltController extends Controller
         }
 
     }
+
+    public function getOltPonPorts($id)
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt2/get_olt_pon_ports_details/' . $id);
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            // $zones = $data->response;
+
+            // $odbs = [];
+
+            // foreach ($zones as $data) {
+
+            //     $url = env('SMART_OLT_API');
+     
+            //     $response = Http::get($url . '/olt2/get_odbs/' . $data->id);
+            
+            //     $data = json_decode(json_decode($response)[0]);
+
+            //     foreach ($data->response as $odb) {
+            //         array_push($odbs, $odb);
+            //     }
+            // }
+
+            \Illuminate\Support\Facades\Log::debug($data->response);
+        
+            return response()->json([
+                'data' => $data->response,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
+    public function getOltCardsById($id)
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt2/get_olt_cards_details/' . $id);
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            // $zones = $data->response;
+
+            // $odbs = [];
+
+            // foreach ($zones as $data) {
+
+            //     $url = env('SMART_OLT_API');
+     
+            //     $response = Http::get($url . '/olt2/get_odbs/' . $data->id);
+            
+            //     $data = json_decode(json_decode($response)[0]);
+
+            //     foreach ($data->response as $odb) {
+            //         array_push($odbs, $odb);
+            //     }
+            // }
+
+            \Illuminate\Support\Facades\Log::debug($data->response);
+        
+            return response()->json([
+                'data' => $data->response,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
 }
