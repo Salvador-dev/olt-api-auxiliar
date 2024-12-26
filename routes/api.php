@@ -35,6 +35,11 @@ Route::middleware(ApiKeyMiddleware::class)->group(function(){
 
     Route::get('/olts/pon_ports_details/{id}', [SmartOltController::class, 'getOltPonPorts']);
 
+    Route::get('/olts/uplinks_by_olt/{id}', [SmartOltController::class, 'getOltUplinksById']);
+
+    Route::get('/olts/vlans_by_olt/{id}', [SmartOltController::class, 'getOltVlansById']);
+
+
 });
 
 

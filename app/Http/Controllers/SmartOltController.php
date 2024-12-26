@@ -391,4 +391,65 @@ class SmartOltController extends Controller
         }
 
     }
+
+    public function getOltUplinksById($id)
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt2/get_olt_uplink_ports_details/' . $id);
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            \Illuminate\Support\Facades\Log::debug($data->response);
+        
+            return response()->json([
+                'data' => $data->response,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
+    public function getOltVlansById($id)
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+     
+            $response = Http::get($url . '/olt2/get_vlans/' . $id);
+        
+            $data = json_decode(json_decode($response)[0]);
+
+
+            \Illuminate\Support\Facades\Log::debug($data->response);
+        
+            return response()->json([
+                'data' => $data->response,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
 }
