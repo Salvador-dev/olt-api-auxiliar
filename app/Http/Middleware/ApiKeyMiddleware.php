@@ -31,7 +31,11 @@ class ApiKeyMiddleware
 
         $apiKey = $request->header('AK');
 
-        if (!$apiKey || $apiKey !== config('app.api_key')) {
+        $ip = $request->ip();
+
+        $allowedIpList = ['127.0.0.1'];
+
+        if (!$apiKey || $apiKey !== config('app.api_key') || !in_array($request->ip(), $allowedIpList)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
