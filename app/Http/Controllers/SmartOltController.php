@@ -14,7 +14,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt/get_olts');
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt/get_olts');
         
             $data = json_decode(json_decode($response)[0]);
         
@@ -39,7 +39,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt/get_olts_uptime_and_env_temperature');
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt/get_olts_uptime_and_env_temperature');
         
             $data = json_decode(json_decode($response)[0]);
         
@@ -64,13 +64,13 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt2/get_onu_types_by_pon_type/gpon');
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_onu_types_by_pon_type/gpon');
             
             $data = json_decode(json_decode($response)[0]);
 
             $array1 = $data->response;
 
-            $response = Http::get($url . '/olt2/get_onu_types_by_pon_type/epon');
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_onu_types_by_pon_type/epon');
             
             $data = json_decode(json_decode($response)[0]);
 
@@ -102,7 +102,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt/get_speed_profiles');
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt/get_speed_profiles');
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -132,7 +132,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt2/unconfigured_onus_for_olt/' . $id);
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/unconfigured_onus_for_olt/' . $id);
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -162,7 +162,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt/unconfigured_onus/');
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt/unconfigured_onus/');
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -195,7 +195,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt2/get_onu_details/' . $id);
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_onu_details/' . $id);
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -228,7 +228,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt/get_zones');
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt/get_zones');
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -258,7 +258,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt/get_zones');
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt/get_zones');
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -270,7 +270,7 @@ class SmartOltController extends Controller
 
                 $url = env('SMART_OLT_API');
      
-                $response = Http::get($url . '/olt2/get_odbs/' . $data->id);
+                $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_odbs/' . $data->id);
             
                 $data = json_decode(json_decode($response)[0]);
 
@@ -305,7 +305,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt2/get_olt_pon_ports_details/' . $id);
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_olt_pon_ports_details/' . $id);
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -317,7 +317,7 @@ class SmartOltController extends Controller
 
             //     $url = env('SMART_OLT_API');
      
-            //     $response = Http::get($url . '/olt2/get_odbs/' . $data->id);
+            //     $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_odbs/' . $data->id);
             
             //     $data = json_decode(json_decode($response)[0]);
 
@@ -352,7 +352,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt2/get_olt_cards_details/' . $id);
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_olt_cards_details/' . $id);
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -364,7 +364,7 @@ class SmartOltController extends Controller
 
             //     $url = env('SMART_OLT_API');
      
-            //     $response = Http::get($url . '/olt2/get_odbs/' . $data->id);
+            //     $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_odbs/' . $data->id);
             
             //     $data = json_decode(json_decode($response)[0]);
 
@@ -399,7 +399,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt2/get_olt_uplink_ports_details/' . $id);
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_olt_uplink_ports_details/' . $id);
         
             $data = json_decode(json_decode($response)[0]);
 
@@ -429,7 +429,7 @@ class SmartOltController extends Controller
 
             $url = env('SMART_OLT_API');
      
-            $response = Http::get($url . '/olt2/get_vlans/' . $id);
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt2/get_vlans/' . $id);
         
             $data = json_decode(json_decode($response)[0]);
 
