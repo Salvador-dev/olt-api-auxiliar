@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class SmartOltController extends Controller
@@ -146,6 +145,42 @@ class SmartOltController extends Controller
         } catch (\Throwable $th) {
 
             // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            return response()->json([
+                'data' => 'No se pudo conectar con Smart Olt...',
+                'status' => false
+            ]);           
+        }
+
+    }
+
+    public function getConfiguredOnusByOlt($id, $board = null, $port = null)
+    {
+
+        try {
+
+            $url = env('SMART_OLT_API');
+
+            $boardQuery = $board != null ? '/' . $board : '';
+            $portQuery = $port != null ? '/' . $port : '';
+     
+            $response = Http::retry(3, 500)->timeout(60)->get($url . '/olt3/get_all_onus_details/' . $id . $boardQuery . $portQuery);
+        
+            $data = json_decode(json_decode($response)[0]);
+
+            \Illuminate\Support\Facades\Log::debug($data->onus);
+        
+            return response()->json([
+                'data' => $data->onus,
+                'status' => true
+            ]);  
+
+        } catch (\Throwable $th) {
+
+            // VALIDAR CUANDO MANDA STRING CMAPO DE STATUS FALSE
+
+            \Illuminate\Support\Facades\Log::debug($th);
+
 
             return response()->json([
                 'data' => 'No se pudo conectar con Smart Olt...',

@@ -27,6 +27,8 @@ Route::middleware(ApiKeyMiddleware::class)->group(function(){
 
     Route::get('/onus/unconfigured_onus_for_olt/{id}', [SmartOltController::class, 'getUnconfiguredOnusByOlt']);
 
+    Route::get('/onus/configured_onus_for_olt/{id}/{board?}/{port?}', [SmartOltController::class, 'getConfiguredOnusByOlt']);
+
     Route::get('/zones/listing', [SmartOltController::class, 'getZones']);
 
     Route::get('/odbs/listing', [SmartOltController::class, 'getOdbs']);
